@@ -11,8 +11,9 @@
 //trim as needed
 import { v4 as uuidv4 } from 'uuid';
 import validator from 'validator';
+import fs from 'fs';
 
-function generateUniqueID(firstname, lastname){
+export function generateUniqueID(firstname, lastname){
     let id = "";
     let name1 = firstname.toLowerCase();
     let name2 = lastname.toLowerCase(); //lastname in lower
@@ -25,7 +26,7 @@ function generateUniqueID(firstname, lastname){
     return id;
 }
 
-console.log(generateUniqueID("Alan", "Turing"));
+
 
 //parameter: array w/ firstname string, lastname string
 //email (string), age (number)
@@ -35,37 +36,28 @@ console.log(generateUniqueID("Alan", "Turing"));
 //first, last, email are non-emptystrings
 //age = atleaast 18 
 //email valid format (USE validator package)
+export function addAccount(firstname, lastname, email, age){
+    if (firstname && lastname && email !== "") { //strings are NOT empty
+        if (age >= 18) { //age is at least 18
+            const validEmail = validator.isEmail(email); //validate email format
 
-function addAccount(firstname, lastname, email, age){
-    //isempty true = is empty; false = not empty
-    let first = firstname;
-    let last = lastname;
-    
-    //email valid format (USE validator package)
-    if (first && last && email !== ""){ //if the string is NOT empty
-        if(age >= 18){ //atleast 18
-            const Validator = require('validator');
-            const validEmail = Validator.isEmail(email);
-            if(validEmail == true){ //if email is validated
-                /*
-                const fn = firstname;
-                const ln = lastname;
-                const e = email;
-                const a = age;
+            if (validEmail) { //if valid save data into useres.txt
+                let uniqueID = generateUniqueID(firstname, lastname);
 
-                fs.writeFile('users.txt', fn, err => {
-                    if(err){
-                        console.error(err);
-                        return;
-                    }
-                    
-                });
+                //format: first name,last name,email,age,uniqueID
+                let data = `${firstname},${lastname},${email},${age},${uniqueID}\n`;
 
-                */
-            } 
+                //append the data to users.txt
+                try {
+                    fs.appendFileSync('users.txt', data);
+                    return true; //if the user was saved, return true.
+                } catch (error) {
+                    console.error("Error writing to file:", error);
+                    return false;
+                }
+            }
         }
     }
-    
-}
+    return false;
 
-console.log(addAccount(["Alan", "Turing", "aturing@w3c.com, 58"]));
+}
