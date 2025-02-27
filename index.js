@@ -20,7 +20,7 @@ function generateUniqueID(firstname, lastname){
     let firstletter1 = name1[0]; //first letter of firstname in lower 
     let random = uuidv4();
     let slicedrandom = random.slice(0,8);
-    
+
     id = firstletter1 + name2 + slicedrandom;
     return id;
 }
@@ -40,19 +40,32 @@ function addAccount(firstname, lastname, email, age){
     //isempty true = is empty; false = not empty
     let first = firstname;
     let last = lastname;
+    
     //email valid format (USE validator package)
     if (first && last && email !== ""){ //if the string is NOT empty
         if(age >= 18){ //atleast 18
-            
+            const Validator = require('validator');
+            const validEmail = Validator.isEmail(email);
+            if(validEmail == true){ //if email is validated
+                /*
+                const fn = firstname;
+                const ln = lastname;
+                const e = email;
+                const a = age;
+
+                fs.writeFile('users.txt', fn, err => {
+                    if(err){
+                        console.error(err);
+                        return;
+                    }
+                    
+                });
+
+                */
+            } 
         }
     }
     
-
-
-
-
 }
-
-
 
 console.log(addAccount(["Alan", "Turing", "aturing@w3c.com, 58"]));
