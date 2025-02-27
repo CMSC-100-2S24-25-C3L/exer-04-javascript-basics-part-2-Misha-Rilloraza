@@ -30,7 +30,7 @@ console.log(generateUniqueID("Alan", "Turing"));
 //if all conditions are true 
 // all fields r present,
 //first, last, email are non-emptystrings
-//age = atleaast 18
+//age = atleaast 18 
 //email valid format (USE validator package)
 function addAccount(firstname, lastname, email, age){
     //isempty true = is empty; false = not empty
@@ -48,5 +48,7 @@ function addAccount(firstname, lastname, email, age){
 
 
 }
+
+
 
 console.log(addAccount(["Alan", "Turing", "aturing@w3c.com, 58"]));
