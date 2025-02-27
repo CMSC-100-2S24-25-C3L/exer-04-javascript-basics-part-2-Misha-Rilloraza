@@ -9,6 +9,8 @@
 //and unique alphanumeric string length of 8
 //use uuuid pckg to get unique alphastring
 //trim as needed
+import { v4 as uuidv4 } from 'uuid';
+import validator from 'validator';
 
 function generateUniqueID(firstname, lastname){
     let id = "";
@@ -16,9 +18,10 @@ function generateUniqueID(firstname, lastname){
     let name2 = lastname.toLowerCase(); //lastname in lower
     
     let firstletter1 = name1[0]; //first letter of firstname in lower 
+    let random = uuidv4();
+    let slicedrandom = random.slice(0,8);
     
-    id = firstletter1 + name2;
-    
+    id = firstletter1 + name2 + slicedrandom;
     return id;
 }
 
@@ -32,6 +35,7 @@ console.log(generateUniqueID("Alan", "Turing"));
 //first, last, email are non-emptystrings
 //age = atleaast 18 
 //email valid format (USE validator package)
+
 function addAccount(firstname, lastname, email, age){
     //isempty true = is empty; false = not empty
     let first = firstname;
